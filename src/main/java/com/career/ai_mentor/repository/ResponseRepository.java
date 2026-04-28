@@ -6,5 +6,5 @@ import com.career.ai_mentor.model.Response;
 
 public interface ResponseRepository extends JpaRepository<Response, Integer> {
 
-    List<Response> findByStudentId(int studentId); // 🔥 IMPORTANT
+    List<Response> findByStudentId(int studentId); 
 }

@@ -6,5 +6,5 @@ import com.career.ai_mentor.model.Result;
 
 public interface ResultRepository extends JpaRepository<Result, Integer> {
 
-    List<Result> findByStudentId(int studentId); // 🔥 IMPORTANT
+    List<Result> findByStudentId(int studentId); 
 }

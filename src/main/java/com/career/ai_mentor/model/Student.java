@@ -14,12 +14,11 @@ public class Student {
     private String email;
     private String password;
 
-    @Column(name = "education_level") // 🔥 IMPORTANT FIX
+    @Column(name = "education_level") 
     private String educationLevel;
 
-    private String role; // STUDENT / ADMIN
+    private String role; 
 
-    // Getters & Setters
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

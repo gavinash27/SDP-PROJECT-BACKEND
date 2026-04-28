@@ -43,7 +43,6 @@ public class StudentService {
                 .orElseThrow(() -> new RuntimeException("Student not found"));
     }
 
-    // 🔥 NEW: Dashboard Data (CLEAN FORMAT)
     public Map<String, Object> getDashboardData(int studentId) {
 
         Student s = getStudentById(studentId);
@@ -54,7 +53,6 @@ public class StudentService {
         response.put("email", s.getEmail());
         response.put("education", s.getEducationLevel());
 
-        // 🔥 Responses → Clean format
         List<Response> responses = responseRepo.findByStudentId(studentId);
         List<Map<String, String>> assessmentList = new ArrayList<>();
 
@@ -71,7 +69,6 @@ public class StudentService {
 
         response.put("assessments", assessmentList);
 
-        // 🔥 Results → Career data
         List<Result> results = resultRepo.findByStudentId(studentId);
         List<Map<String, Object>> careerList = new ArrayList<>();
 

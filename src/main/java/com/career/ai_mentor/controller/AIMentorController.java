@@ -36,25 +36,25 @@ public class AIMentorController {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // 📊 History
+    
     @GetMapping("/history/{studentId}")
     public List<Result> getHistory(@PathVariable int studentId) {
         return resultRepo.findByStudentId(studentId);
     }
 
-    // ➕ Add Question
+    
     @PostMapping("/admin/add-question")
     public Assessment addQuestion(@RequestBody Assessment a) {
         return repo.save(a);
     }
 
-    // 🛣 Roadmap
+    
     @GetMapping("/roadmap/{studentId}")
     public List<Roadmap> getRoadmap(@PathVariable int studentId) {
         return roadmapRepo.findByStudentId(studentId);
     }
 
-    // 🔥 FIXED ANALYZE (FINAL VERSION)
+   
     @PostMapping("/analyze")
     public Map<String, Object> analyze(@RequestBody Map<String, Object> request) {
 
@@ -73,7 +73,7 @@ public class AIMentorController {
         return service.analyze(responses, education);
     }
 
-    // 🤖 Chatbot
+   
     @PostMapping("/chat")
     public String chat(@RequestBody Map<String, String> input) {
 

@@ -8,12 +8,13 @@ import com.career.ai_mentor.model.Roadmap;
 import com.career.ai_mentor.security.JwtUtil;
 import com.career.ai_mentor.service.StudentService;
 import com.career.ai_mentor.repository.RoadmapRepository;
+import com.career.ai_mentor.repository.StudentRepository;
 
 import java.util.*;
 
 @RestController
 @RequestMapping("/student")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class StudentController {
 
     @Autowired
@@ -23,15 +24,16 @@ public class StudentController {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private RoadmapRepository roadmapRepo; // 🔥 NEW
+    private RoadmapRepository roadmapRepo;
 
-    // ✅ Register
+    @Autowired
+    private StudentRepository studentRepo;
+
     @PostMapping("/register")
     public Student register(@RequestBody Student student) {
         return studentService.register(student);
     }
 
-    // ✅ Login
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody Student student) {
 
@@ -50,13 +52,11 @@ public class StudentController {
         }
     }
 
-    // 🔥 UPDATED: Dashboard API (WITH ROADMAP)
     @GetMapping("/dashboard/{id}")
     public Map<String, Object> getDashboard(@PathVariable int id) {
 
         Map<String, Object> response = studentService.getDashboardData(id);
 
-        // 🔥 ADD ROADMAP
         List<Roadmap> roadmapList = roadmapRepo.findByStudentId(id);
 
         if (roadmapList != null && !roadmapList.isEmpty()) {
@@ -66,5 +66,40 @@ public class StudentController {
         }
 
         return response;
+    }
+
+    @GetMapping("/all")
+    public List<Student> getAllStudents() {
+        return studentRepo.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Student getStudentById(@PathVariable int id) {
+        return studentRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+    }
+
+    @PutMapping("/update/{id}")
+    public Student updateStudent(@PathVariable int id, @RequestBody Student updatedStudent) {
+
+        Student student = studentRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+
+        student.setName(updatedStudent.getName());
+        student.setEmail(updatedStudent.getEmail());
+        student.setPassword(updatedStudent.getPassword());
+        student.setEducationLevel(updatedStudent.getEducationLevel());
+
+        return studentRepo.save(student);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteStudent(@PathVariable int id) {
+
+        Student student = studentRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+
+        studentRepo.delete(student);
+        return "Student deleted successfully";
     }
 }

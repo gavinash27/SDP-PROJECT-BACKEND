@@ -34,7 +34,6 @@ public class AIMentorService {
     @Autowired
     private StudentRepository studentRepo;
 
-    // 🔥 FIXED ANALYZE METHOD
     public Map<String, Object> analyze(List<Response> responses, String education) {
 
         int analytical = 0;
@@ -56,13 +55,11 @@ public class AIMentorService {
             else creative += score;
         }
 
-        // ✅ STEP-5.4 FIX (VERY IMPORTANT)
         int studentId = responses.get(0).getStudentId();
 
         Student student = studentRepo.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
 
-         // ✅ NOW FIXED
 
         String career = "";
 
@@ -96,7 +93,6 @@ public class AIMentorService {
                 career = "Medical Research / Public Health";
         }
 
-        // ✅ SAVE RESULT
         Result res = new Result();
         res.setStudentId(studentId);
         res.setAnalytical(analytical);
@@ -153,28 +149,21 @@ public class AIMentorService {
 
     public String chat(int studentId, String message) {
 
-        // 🔥 1. Get Student
         Student student = studentRepo.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
 
-        // 🔥 2. Get Latest Result
         List<Result> results = resultRepo.findByStudentId(studentId);
         Result latest = results.isEmpty() ? null : results.get(results.size() - 1);
 
-        // 🔥 3. Get Roadmap
         List<Roadmap> roadmaps = roadmapRepo.findByStudentId(studentId);
         String roadmapText = roadmaps.isEmpty() ? "No roadmap yet" : roadmaps.get(0).getSteps();
 
-        // 🔥 4. Build AI Context
         String context = buildContext(student, latest, roadmapText);
 
-        // 🔥 5. Final Prompt
         String finalPrompt = context + "\n\nStudent Question: " + message;
 
-        // 🔥 6. Call AI
         String reply = aiClientService.getAIResponse(finalPrompt);
 
-        // 🔥 Save Chat
         ChatMessage chat = new ChatMessage();
         chat.setStudentId(studentId);
         chat.setMessage(message);

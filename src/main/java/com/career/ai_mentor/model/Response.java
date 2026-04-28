@@ -10,15 +10,15 @@ public class Response {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "student_id") // 🔥 mapping
+    @Column(name = "student_id") 
     private int studentId;
 
-    @Column(name = "question_id") // 🔥 mapping
+    @Column(name = "question_id") 
     private int questionId;
 
     private String answer;
 
-    // Getters & Setters
+    
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

@@ -15,7 +15,6 @@ public class ChatMessage {
     @Column(length = 2000)
     private String response;
 
-    // ✅ GETTERS & SETTERS
 
     public int getId() {
         return id;

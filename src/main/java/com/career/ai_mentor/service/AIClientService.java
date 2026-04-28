@@ -40,7 +40,6 @@ public class AIClientService {
         }
     }
 
-    // 🔥 Extract only AI message
     private String extractReply(String json) {
         try {
             int start = json.indexOf("\"content\":\"") + 11;

@@ -10,7 +10,7 @@ public class Result {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "student_id") // 🔥 mapping
+    @Column(name = "student_id") 
     private int studentId;
 
     private int analytical;
@@ -20,7 +20,7 @@ public class Result {
 
     private String career;
 
-    // Getters & Setters
+   
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
