@@ -7,14 +7,17 @@ WORKDIR /app
 # Copy all files
 COPY . .
 
-# 🔥 FIX: Give execute permission to mvnw (YOUR ERROR FIX)
+# Give execute permission to mvnw
 RUN chmod +x mvnw
 
 # Build project
 RUN ./mvnw clean package -DskipTests
 
-# Render uses dynamic PORT → must match Spring Boot
-EXPOSE 8084
+# Render provides dynamic PORT
+ENV PORT=8080
 
-# Run app
-CMD sh -c "java -jar target/*.jar"
+# Expose correct port
+EXPOSE 8080
+
+# Run app with dynamic port
+CMD sh -c "java -jar target/*.jar --server.port=$PORT"
